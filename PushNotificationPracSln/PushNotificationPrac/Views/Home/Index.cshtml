@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@{
+    <style>
+        .notification-box {
+            position: absolute;
+            top: 4.5%;
+            left: 6%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 1000;
+            width : 20%;
+            height : 25%;
+            overflow:auto;
+            border-radius : 8px;
+            box-shadow : 0px 0px 5px teal;
+        }</style>
+}
+
+<section>
+    <div class="notification-container" style="border:1px solid teal">
+        <i id="notification-bell" class="fa fa-bell m-3 fs-3" style="position:relative"></i>
+        <div id="notification-box" class="notification-box">
+            <ul class="ms-5 fs-5">
+                <li>Notification 1</li>
+                <li>Notification 2</li>
+                <li>Notification 3</li>
+                <li>Notification 4</li>
+                <li>Notification 5</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $("#notification-bell").click(function () {
+            $("#notification-box").toggle();
+        });
+    });
+</script>
