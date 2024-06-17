@@ -1,45 +1,137 @@
 ﻿@{
-    Layout = "_Layout";
+    Layout = "_SignalRLayout";
 }
 
 @{
-    <style>
-        .notification-box {
-            position: absolute;
-            top: 4.5%;
-            left: 6%;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            z-index: 1000;
-            width : 20%;
-            height : 25%;
-            overflow:auto;
-            border-radius : 8px;
-            box-shadow : 0px 0px 5px teal;
-        }</style>
+                        <style>
+                            .notification-box {
+                                position: absolute;
+                                top: 4.5%;
+                                left: 6%;
+                                background-color: #fff;
+                                border: 1px solid #ccc;
+                                padding: 10px;
+                                z-index: 1000;
+                                width: 20%;
+                                height: 25%;
+                                overflow: auto;
+                                border-radius: 8px;
+                                box-shadow: 0px 0px 5px teal;
+                            }
+
+                            .clientsCount-container {
+                                position: absolute;
+                                top: 4.5%;
+                                right: 6%;
+                                background-color: #fff;
+                                border: 1px solid #ccc;
+                                padding: 10px;
+                                z-index: 1000;
+                                width: 25%;
+                                overflow: auto;
+                                border-radius: 8px;
+                                box-shadow: 0px 0px 5px teal;
+                            }
+                        </style>
 }
 
 <section>
-    <div class="notification-container" style="border:1px solid teal">
+    <div class="notification-container" style="border:1px solid teal" id="notify">
         <i id="notification-bell" class="fa fa-bell m-3 fs-3" style="position:relative"></i>
         <div id="notification-box" class="notification-box">
-            <ul class="ms-5 fs-5">
-                <li>Notification 1</li>
-                <li>Notification 2</li>
-                <li>Notification 3</li>
-                <li>Notification 4</li>
-                <li>Notification 5</li>
+            <ul class="ms-4 fs-5" id="notifications">
+                
             </ul>
         </div>
     </div>
 </section>
 
 
+<section class="clientsCount-container">
+    <div class="container ">
+        <div class="row">
+            <div class="w-100">
+                <span class="fs-4">Connected Clients : <strong class="text-success" id="clientsCount">10</strong> </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+
+<section class="container bordered" style="margin-top:10%">
+    <div class="row">
+        <div class="col-6">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" class="form-control" cols="1"></textarea>
+        </div>
+        <div class="col-3">
+            <label for="allUsers" class="form-label">All Connected Users</label>
+            <select id="allUsers" class="form-select mb-3"></select>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-primary mt-4" id="send">Send</button>
+        </div>
+    </div>
+</section>
+
+
 <script>
+    const connection = new signalR.HubConnectionBuilder().withUrl('/NotificationHub').build();
+
+    // For connecting to the Notification HUB
+    async function start() {
+        try {
+            await connection.start();
+            console.log("SignalR Connected");
+            alert("SignalR Connected");
+        } catch (err) {
+            console.log(err.toString());
+            alert("Error connecting to SignalR. Retrying...");
+            //setTimeout(start, 5000);
+        }
+    }
+
+    connection.onclose(async () => {
+        alert("Connection closed. Reconnecting...");
+        await start();
+    });
+
+    start();
+
     $(document).ready(function () {
         $("#notification-bell").click(function () {
             $("#notification-box").toggle();
+        });
+
+        connection.on("noOfConnectedClients", (count,users) => {
+            $("#clientsCount").text(count);
+            let allUsers = JSON.parse(users);
+            $("#allUsers").empty();
+            for (let user of allUsers ){
+                let option = `<option value='${user}'>${user}</option>`;
+                $("#allUsers").append(option);
+            }
+        });
+
+        // On Receiving the notification
+        connection.on("noticationReceived",(message)=>{
+            let notification = `<li>${message}</li>`;
+            $("#notifications").append(notification);
+        });
+
+        // On Button click send the notification
+        $("#send").click(function(){
+            let to = $("#allUsers").val();
+            let message = $("#message").val();
+
+            if (message == "" || message == null || message == undefined) {
+                alert("Enter message to send"); return
+            };
+
+            connection.invoke("SendNotificationTo",to,message);
+            $("#message").val("");
+
         });
     });
 </script>

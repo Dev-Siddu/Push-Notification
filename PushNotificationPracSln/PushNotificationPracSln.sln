@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushNotificationPrac", "PushNotificationPrac\PushNotificationPrac.csproj", "{93D9B25E-AB65-42C0-9468-A6BE8DF1710A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushNotificationPrac", "PushNotificationPrac\PushNotificationPrac.csproj", "{93D9B25E-AB65-42C0-9468-A6BE8DF1710A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{F45D957E-B3FE-4E90-A500-A888BF95AF34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{F45D957E-B3FE-4E90-A500-A888BF95AF34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{311AE750-C96A-4B07-AAAE-DAAE0756EBD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{311AE750-C96A-4B07-AAAE-DAAE0756EBD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRHub", "SignalRHub\SignalRHub.csproj", "{EA465542-89F4-48F2-85D2-E6D440288A1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{311AE750-C96A-4B07-AAAE-DAAE0756EBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{311AE750-C96A-4B07-AAAE-DAAE0756EBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{311AE750-C96A-4B07-AAAE-DAAE0756EBD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA465542-89F4-48F2-85D2-E6D440288A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA465542-89F4-48F2-85D2-E6D440288A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA465542-89F4-48F2-85D2-E6D440288A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA465542-89F4-48F2-85D2-E6D440288A1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
